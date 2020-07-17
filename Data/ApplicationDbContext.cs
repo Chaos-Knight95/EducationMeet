@@ -17,5 +17,26 @@ namespace EducationMeet.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+    }
+
+    public class EducateMeetDBContext : DbContext
+    {
+        public DbSet<Teacher> Teachers { get; set; }
+        public EducateMeetDBContext(DbContextOptions<EducateMeetDBContext> options)
+        : base(options)
+        { }
+    }
+
+    public class Teacher
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string ContactNumber { get; set; }
+        public string Gender { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateModified { get; set; }
     }
 }
