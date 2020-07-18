@@ -1,6 +1,6 @@
-<h1>Counter</h1>
 
-
-<p aria-live="polite">Current count: <strong>{{ currentCount }}</strong></p>
-
-<button class="btn btn-primary" (click)="incrementCounter()">Increment</button>
+<ul class="list-group mt-4">
+  <li class="list-group-item" (click)="userClicked(user)" *ngFor="let user of users$ | async">
+    {{user.userName}}
+  </li>
+</ul>

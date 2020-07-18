@@ -12,6 +12,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
+import { SignalrService } from '../Service/signalr.service';
+import { RtcService } from '../Service/rtc.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
     ])
   ],
   providers: [
+    SignalrService,
+    RtcService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

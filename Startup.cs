@@ -11,11 +11,14 @@ using EducationMeet.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using EducationMeet.Hubs;
 
 namespace EducationMeet
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +43,16 @@ namespace EducationMeet
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("*").AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                                  });
+            });
+
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
@@ -49,6 +62,8 @@ namespace EducationMeet
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddSignalR();//.AddAzureSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,12 +93,16 @@ namespace EducationMeet
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            app.UseCors();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
 
             app.UseSpa(spa =>
