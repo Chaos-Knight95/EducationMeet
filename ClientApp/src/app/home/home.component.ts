@@ -74,6 +74,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     try {
       await this.signalR.startConnection(this.currentUser);
       this.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      this.videoPlayer.nativeElement.srcObject = this.stream;
+      this.videoPlayer.nativeElement.load();
+      this.videoPlayer.nativeElement.play();
     } catch (error) {
       console.error(`Can't join room, error ${error}`);
     }
