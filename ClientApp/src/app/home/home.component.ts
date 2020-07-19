@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { SignalrService } from '../../Service/signalr.service';
 import { UserInfo, PeerData, SignalInfo, ChatMessage } from '../../models/peerData.interface';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -73,10 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public async saveUsername(): Promise<void> {
     try {
       await this.signalR.startConnection(this.currentUser);
-      this.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      this.videoPlayer.nativeElement.srcObject = this.stream;
-      this.videoPlayer.nativeElement.load();
-      this.videoPlayer.nativeElement.play();
+      this.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true, peerIdentity: this.currentUser });
     } catch (error) {
       console.error(`Can't join room, error ${error}`);
     }

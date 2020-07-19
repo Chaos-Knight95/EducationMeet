@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { Instance } from 'simple-peer';
 import { PeerData, UserInfo } from '../models/peerData.interface';
 
-declare var SimplePeer: any;
+import { Instance } from 'simple-peer';
+
+import SimplePeer from 'simple-peer';
+
+//declare var SimplePeer: any
 
 @Injectable({
   providedIn: 'root'
 })
-
 
 export class RtcService {
 

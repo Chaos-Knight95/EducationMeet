@@ -26,7 +26,7 @@ export class SignalrService {
   public async startConnection(currentUser: string): Promise<void> {
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('/chathub')
+      .withUrl('https://educationmeet.azurewebsites.net/signalrtc')
       .build();
 
     await this.hubConnection.start();
